@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Track your order — BiteNow{% endblock %}
+{% block content %}
+<main class="tracking-page">
+  <section class="tracking-info">
+    <a class="back-dark" href="{% url 'home' %}">← Back to restaurants</a>
+    <p class="eyebrow">LIVE ORDER STATUS</p>
+    <h1>Your food is on the way</h1>
+    <div class="arrival"><span>Estimated arrival</span><strong>12–18 min</strong></div>
+    <div class="progress-list">
+      <article class="progress-step complete"><div class="step-icon">✓</div><div><h3>Order confirmed</h3><p>The restaurant received your order</p></div><time>11:42 AM</time></article>
+      <article class="progress-step complete"><div class="step-icon">✓</div><div><h3>Preparing your food</h3><p>The kitchen is getting everything ready</p></div><time>11:47 AM</time></article>
+      <article class="progress-step active"><div class="step-icon">●</div><div><h3>Out for delivery</h3><p>Your driver is heading to your address</p></div><time>Now</time></article>
+      <article class="progress-step"><div class="step-icon"></div><div><h3>Delivered</h3><p>Enjoy your meal</p></div><time>12:05 PM</time></article>
+    </div>
+  </section>
+  <section class="tracking-map" aria-label="Order delivery map">
+    <div class="map-road road-one"></div><div class="map-road road-two"></div><div class="map-road road-three"></div>
+    <div class="map-marker restaurant-marker"><span>🍔</span><small>Restaurant</small></div>
+    <div class="delivery-route"></div>
+    <div class="map-marker driver-marker"><span>🛵</span></div>
+    <div class="map-marker home-marker"><span>⌂</span><small>Home</small></div>
+  </section>
+</main>
+{% endblock %}

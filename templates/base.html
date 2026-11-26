@@ -1,0 +1,124 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BiteNow — Fresh Food Delivered Fast{% endblock %}</title>
+  <link rel="preconnect" href="https://googleapis.com">
+  <link rel="preconnect" href="https://gstatic.com" crossorigin>
+  <link href="https://googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Manrope:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+  <!-- Top Promo Strip -->
+  <div class="promo-strip">
+    🌿 Free delivery on orders above ₹199 · Use code <b>FRESH50</b>
+  </div>
+
+  <!-- Sticky Navbar -->
+  <header class="navbar">
+    <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle Menu">☰</button>
+
+    <a class="brand" href="{% url 'home' %}" aria-label="BiteNow home">
+      <span class="brand-mark">B</span>
+      <span>Bite<span>Now</span></span>
+    </a>
+
+    <button class="delivery-box" id="addressBtn" type="button" title="Change delivery address">
+      <span class="pin">●</span>
+      <div>
+        <small>Deliver now</small>
+        <b id="addressLabel">Home address ⌄</b>
+      </div>
+    </button>
+
+    <nav class="main-nav" id="mainNav" aria-label="Main navigation">
+  <a href="{% url 'home' %}" class="nav-link {% if request.resolver_match.url_name == 'home' %}active{% endif %}">Home</a>
+  <a href="{% url 'home' %}#restaurants" class="nav-link">Restaurants</a>
+  <a href="{% url 'home' %}#categories" class="nav-link">Categories</a>
+  <a href="{% url 'track_order' %}" class="nav-link {% if request.resolver_match.url_name == 'track_order' %}active{% endif %}">Track order</a>
+
+  {% if user.is_authenticated %}
+    <span class="user-badge">👤 {{ user.username }}</span>
+  {% else %}
+    <a href="/admin/" class="nav-link sign-in-pill">Sign in</a>
+  {% endif %}
+
+  <a href="{% url 'cart' %}" class="cart-link">
+    <span>Cart</span>
+    <b>{{ request.session.cart|length|default:'0' }}</b>
+  </a>
+</nav>
+  </header>
+
+  {% block content %}{% endblock %}
+
+  <!-- Clean Footer -->
+  <footer class="site-footer">
+    <div class="footer-glow"></div>
+    <div class="footer-inner">
+      
+      <!-- Brand & Newsletter -->
+      <div class="footer-about">
+        <a class="brand footer-brand" href="{% url 'home' %}">
+          <span class="brand-mark">B</span>
+          <span>Bite<span>Now</span></span>
+        </a>
+        <p>Fresh bowls, hot meals, and local favorites delivered fast to your doorstep.</p>
+        
+        <form class="footer-newsletter" onsubmit="event.preventDefault(); alert('Thanks for subscribing to BiteNow deals!');">
+          <input type="email" placeholder="Enter your email for 20% off..." required>
+          <button type="submit">Join</button>
+        </form>
+
+        <div class="social-pills">
+          <a href="#" aria-label="Instagram">📸 Instagram</a>
+          <a href="#" aria-label="Twitter">🐦 Twitter</a>
+          <a href="#" aria-label="YouTube">▶️ YouTube</a>
+        </div>
+      </div>
+
+      <!-- Navigation Columns -->
+      <div class="footer-cols">
+        <div>
+          <h4>Discover</h4>
+          <a href="{% url 'home' %}#restaurants">Top Restaurants</a>
+          <a href="{% url 'home' %}#categories">Healthy Bowls</a>
+          <a href="{% url 'track_order' %}">Live Tracking</a>
+          <a href="{% url 'home' %}">Today's Offers</a>
+        </div>
+        <div>
+          <h4>Account</h4>
+          <a href="{% url 'cart' %}">Your Cart</a>
+          <a href="/admin/">Partner Login</a>
+          <a href="#">Saved Addresses</a>
+          <a href="#">Help & Support</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="footer-bottom">
+      <span>© 2026 <b>BiteNow</b> · Made with 💚 for food lovers</span>
+      <div class="footer-legal">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms of Service</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+  const navLinks = document.querySelectorAll('.main-nav .nav-link');
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', function () {
+      navLinks.forEach(item => item.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+</script>
+
+</body>
+</html>

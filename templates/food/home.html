@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+{% block content %}
+<section class="hero">
+  <div class="hero-copy">
+    <p class="eyebrow">GOOD FOOD, RIGHT NOW</p>
+    <h1>Craving something<br><em>delicious?</em></h1>
+    <form class="search" method="get">
+      <span class="search-icon">⌕</span>
+      <input name="q" value="{{ query }}" placeholder="Enter your address or search for food">
+      <button type="submit">Find food</button>
+    </form>
+  </div>
+  <div class="hero-art">
+    <div class="dish dish-one"></div><div class="dish dish-two"></div>
+  </div>
+</section>
+<main class="page" id="restaurants">
+  <div class="section-heading"><div><p>NEARBY FAVORITES</p><h2>{% if query %}Results for “{{ query }}”{% else %}Popular near you{% endif %}</h2></div><div class="arrows"><button>←</button><button>→</button></div></div>
+  <div class="restaurant-grid">
+    {% for restaurant in restaurants %}
+    <a class="restaurant-card" href="{% url 'restaurant' restaurant.id %}">
+      <div class="card-image" style="background-image:url('{{ restaurant.image }}')"><span class="promo">20% off</span></div>
+      <div class="card-body"><div><h3>{{ restaurant.name }}</h3><span class="rating">★ {{ restaurant.rating }}</span></div><p>{{ restaurant.cuisine }}</p><p class="meta"><b>{{ restaurant.time }}</b><span>•</span><span>${{ restaurant.fee }} delivery</span></p></div>
+    </a>
+    {% empty %}<p class="empty">No restaurants found. Try another search.</p>{% endfor %}
+  </div>
+  <section class="categories"><p>EXPLORE CATEGORIES</p><div class="category-row"><div>🍔<b>Burgers</b></div><div>🍕<b>Pizza</b></div><div>🍣<b>Sushi</b></div><div>🥗<b>Healthy</b></div><div>🌮<b>Mexican</b></div><div>🍰<b>Desserts</b></div></div></section>
+</main>
+{% endblock %}

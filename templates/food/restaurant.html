@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block title %}{{ restaurant.name }} — BiteNow{% endblock %}
+{% block content %}
+<section class="restaurant-hero" style="background-image:linear-gradient(90deg,rgba(14,18,16,.85),rgba(14,18,16,.05)),url('{{ restaurant.image }}')">
+  <a class="back" href="{% url 'home' %}">← All restaurants</a>
+  <div><p>{{ restaurant.cuisine }}</p><h1>{{ restaurant.name }}</h1><div class="restaurant-meta"><span>★ {{ restaurant.rating }}</span><span>{{ restaurant.time }}</span><span>${{ restaurant.fee }} delivery</span></div></div>
+</section>
+<main class="menu-page">
+  <div class="menu-heading"><div><p>MOST LOVED</p><h2>Popular items</h2></div><div class="menu-search">⌕ <input placeholder="Search menu"></div></div>
+  <div class="menu-grid">
+    {% for name, description, price, image in items %}
+    <article class="menu-card"><div class="menu-info"><h3>{{ name }}</h3><p>{{ description }}</p><b>${{ price }}</b></div><img src="{{ image }}" alt="{{ name }}"><form method="post" action="{% url 'add_to_cart' restaurant.id %}">{% csrf_token %}<input type="hidden" name="name" value="{{ name }}"><input type="hidden" name="price" value="{{ price }}"><button aria-label="Add {{ name }} to cart">+</button></form></article>
+    {% endfor %}
+  </div>
+</main>
+{% endblock %}
